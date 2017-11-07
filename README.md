@@ -17,3 +17,12 @@ $ quasar build
 # lint code
 $ quasar lint
 ```
+
+## Server
+cd server/
+
+```
+$ npm install
+
+$ npm start
+```

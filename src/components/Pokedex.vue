@@ -12,7 +12,7 @@
       </div>
 
       <div v-else>
-        <span class='cursor-pointer' v-for='pokemon in pokemonData' @click='showDetails'>
+        <span class='cursor-pointer' v-for='pokemon in pokedex' @click='showDetails(pokemon.name, pokemon.id)'>
           <q-card inline class='pokemon-card' tabindex='0'>
             <q-card-main>
               <img :src='pokemon.imgUrl' class='center-img'>
@@ -26,11 +26,7 @@
               <div class='bold-text'>
                 {{pokemon.name}}
               </div>
-              <!-- <div>
-                <span class='pokemon-type-chip' v-for='type in pokemon.types'>
-                  <PokemonTypeChip :pokemon-type=type></PokemonTypeChip>
-                </span>
-              </div> -->
+              
             </q-card-title>
           </q-card>
         </span>
@@ -71,33 +67,38 @@ export default {
     return {
       loading: false,
       error: null,
-      pokemonData: []
+      pokedex: []
     }
   },
   // https://router.vuejs.org/en/advanced/data-fetching.html
   created() {
     // fetch the data when the view is created and the data is
     // already being observed
-    this.fetchPokemonData()
+    this.setPokedex()
   },
   watch: {
     // call again the method if the route changes
-    $route: 'fetchPokemonData'
+    $route: 'setPokedex'
   },
   methods: {
-    showDetails() {
-      console.log('details was clicked')
+    showDetails(name, id) {
+      const pokemonName = name.charAt(0).toLowerCase() + name.slice(1)
+
+      this.$router.push({ path: `/pokemon/${pokemonName}`, 
+        query: {
+          pokemonID: id
+        }
+      })
     },
-    async fetchPokemonData() {
+    async setPokedex() {
       this.loading = true
       this.error = null
-      this.pokemonData = []
-      let response = null
+      this.pokedex = []
       
       try {
-        response = await PokemonService.getPokemonsNameList(this.pokemonGenerationIDs.FROM, this.pokemonGenerationIDs.TO)
+        const response = await PokemonService.getPokemonsNameList(this.pokemonGenerationIDs.FROM, this.pokemonGenerationIDs.TO)
         
-        this.pokemonData = response.data || []
+        this.pokedex = response.data || []
         this.loading = false
       } catch (err) {
         this.error = err
@@ -135,13 +136,5 @@ export default {
 
 .cursor-pointer {
   cursor: pointer
-}
-
-.pokemon-type-chip {
-  margin-left: 10px;
-}
-
-.pokemon-type-chip:first-child {
-  margin-left: 0;
 }
 </style>

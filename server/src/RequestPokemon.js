@@ -1,14 +1,42 @@
 let Pokedex = require('pokedex-promise-v2')
 let P = new Pokedex()
 
+let _getPokemonImg = (pokemonID) => {
+  let numDigits = pokemonID.toString().length
+  let pokemonImgUrl = 'https://assets.pokemon.com/assets/cms2/img/pokedex/detail/'
+  let pokemonIDPaddedZeroes = ''
+
+  switch (numDigits) {
+    case 1:
+      pokemonIDPaddedZeroes = `00${pokemonID}`
+      pokemonImgUrl += `${pokemonIDPaddedZeroes}.png`
+      break
+    case 2:
+      pokemonIDPaddedZeroes = `0${pokemonID}`
+      pokemonImgUrl += `${pokemonIDPaddedZeroes}.png`
+      break
+    case 3:
+      pokemonIDPaddedZeroes = `${pokemonID}`
+      pokemonImgUrl += `${pokemonIDPaddedZeroes}.png`
+  }
+
+  return {
+    pokemonImgUrl,
+    pokemonIDPaddedZeroes
+  }
+}
+
 module.exports = {
   async getPokemonData (req, res) {
     try {
       // .getPokemonByName takes a string or number to get a pokemon
       // string - name of pokemon
       // number - id of pokemon
-      const pokemon = await P.getPokemonByName(req.query.pokemonID)
-
+      let pokemon = await P.getPokemonByName(req.query.pokemonName)
+      let {pokemonImgUrl, pokemonIDPaddedZeroes} = _getPokemonImg(req.query.pokemonID)
+      
+      pokemon['imgUrl'] = pokemonImgUrl
+      pokemon['idPaddedZeroes'] = pokemonIDPaddedZeroes
       res.send(pokemon)
     } catch (err) {
       res.status(400).send({
@@ -16,31 +44,15 @@ module.exports = {
       })
     }
   },
-  async getPokemonsNameList (req, res) {
+  async getPokemonDisplays (req, res) {
     try {
       const pokemonList = await P.getPokemonsList()
       const pokemonIDFrom = parseInt(req.query.pokemonIDFrom)
       const pokemonIDTo = parseInt(req.query.pokemonIDTo)
       const results = pokemonList.results.slice(pokemonIDFrom - 1, pokemonIDTo).map((item, index) => {
         let pokemonID = index + pokemonIDFrom
-        let numDigits = pokemonID.toString().length
-        let pokemonImgUrl = 'https://assets.pokemon.com/assets/cms2/img/pokedex/detail/'
-        let pokemonIDPaddedZeroes = ''
+        let {pokemonImgUrl, pokemonIDPaddedZeroes} = _getPokemonImg(pokemonID)
 
-        switch (numDigits) {
-          case 1:
-            pokemonIDPaddedZeroes = `00${pokemonID}`
-            pokemonImgUrl += `${pokemonIDPaddedZeroes}.png`
-            break
-          case 2:
-            pokemonIDPaddedZeroes = `0${pokemonID}`
-            pokemonImgUrl += `${pokemonIDPaddedZeroes}.png`
-            break
-          case 3:
-            pokemonIDPaddedZeroes = `${pokemonID}`
-            pokemonImgUrl += `${pokemonIDPaddedZeroes}.png`
-        }
-        
         return {
           id: pokemonID,
           idPaddedZeroes: pokemonIDPaddedZeroes,

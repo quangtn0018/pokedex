@@ -13,6 +13,7 @@ import GenerationFour from '@/page/GenerationFour.vue'
 import GenerationFive from '@/page/GenerationFive.vue'
 import GenerationSix from '@/page/GenerationSix.vue'
 import GenerationSeven from '@/page/GenerationSeven.vue'
+import PokemonDetails from '@/page/PokemonDetails.vue'
 
 Vue.use(VueRouter)
 
@@ -49,7 +50,8 @@ export default new VueRouter({
         { path: '/generation4', component: GenerationFour },
         { path: '/generation5', component: GenerationFive },
         { path: '/generation6', component: GenerationSix },
-        { path: '/generation7', component: GenerationSeven }
+        { path: '/generation7', component: GenerationSeven },
+        { path: '/pokemon/:pokemonName', component: PokemonDetails }
       ]
     },
 

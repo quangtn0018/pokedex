@@ -1,10 +1,10 @@
 import Api from '../services/Api'
 
 export default {
-  getPokemonData (pokemonID) {
-    return Api().get(`pokemon?pokemonID=${pokemonID}`)
+  getPokemonData (pokemonName, pokemonID) {
+    return Api().get(`pokemon?pokemonName=${pokemonName}&pokemonID=${pokemonID}`)
   },
   getPokemonsNameList (pokemonIDFrom, pokemonIDTo) {
-    return Api().get(`pokemon?pokemonIDFrom=${pokemonIDFrom}&pokemonIDTo=${pokemonIDTo}`)
+    return Api().get(`pokemonDisplays?pokemonIDFrom=${pokemonIDFrom}&pokemonIDTo=${pokemonIDTo}`)
   }
 }
