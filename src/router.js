@@ -51,7 +51,7 @@ export default new VueRouter({
         { path: '/generation5', component: GenerationFive },
         { path: '/generation6', component: GenerationSix },
         { path: '/generation7', component: GenerationSeven },
-        { path: '/pokemon/:pokemonName', component: PokemonDetails }
+        { path: '/pokemon/:pokemonID', component: PokemonDetails }
       ]
     },
 

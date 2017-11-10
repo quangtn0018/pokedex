@@ -12,7 +12,7 @@
       </div>
 
       <div v-else>
-        <span class='cursor-pointer' v-for='pokemon in pokedex' @click='showDetails(pokemon.name, pokemon.id)'>
+        <span class='cursor-pointer' v-for='pokemon in pokedex' @click='showDetails(pokemon.id)'>
           <q-card inline class='pokemon-card' tabindex='0'>
             <q-card-main>
               <img :src='pokemon.imgUrl' class='center-img'>
@@ -81,14 +81,8 @@ export default {
     $route: 'setPokedex'
   },
   methods: {
-    showDetails(name, id) {
-      const pokemonName = name.charAt(0).toLowerCase() + name.slice(1)
-
-      this.$router.push({ path: `/pokemon/${pokemonName}`, 
-        query: {
-          pokemonID: id
-        }
-      })
+    showDetails(id) {
+      this.$router.push({ path: `/pokemon/${id}`})
     },
     async setPokedex() {
       this.loading = true
@@ -132,9 +126,5 @@ export default {
 .pokemon-card:hover, .pokemon-card:focus {
   transform: scale(1.05);
   background-color: gray;
-}
-
-.cursor-pointer {
-  cursor: pointer
 }
 </style>
