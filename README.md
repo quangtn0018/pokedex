@@ -3,7 +3,30 @@
 > A Quasar project
 
 ## Build Setup
+Open up two terminal and cd into the repo
+In the first terminal, cd server/ and run the following commands
+``` bash
+# install dependencies
+$ npm install
 
+# start the server
+$ npm start
+```
+
+Then in the second terminal, stay or cd into root directory of repo / project and run the following commands
+``` bash
+# install quasar http://quasar-framework.org/guide/
+$ npm install -g quasar-cli
+
+# install dependencies
+$ npm install
+
+# serve with hot reload at localhost:8080
+$ quasar dev
+```
+
+## Quasar
+Extra information about Quasar commands
 ``` bash
 # install dependencies
 $ npm install
@@ -16,13 +39,4 @@ $ quasar build
 
 # lint code
 $ quasar lint
-```
-
-## Server
-cd server/
-
-```
-$ npm install
-
-$ npm start
 ```

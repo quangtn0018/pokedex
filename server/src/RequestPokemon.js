@@ -62,8 +62,24 @@ module.exports = {
       })
 
       const stats = pokemon.stats.map((item) => {
+        let statName
+
+        switch(item.stat.name) {
+          case 'special-defense':
+            statName = 'Special Defense'
+            break
+          case 'special-attack':
+            statName = 'Special Attack'
+            break
+          case 'hp':
+            statName = 'HP'
+            break
+          default:
+            statName = item.stat.name.charAt(0).toUpperCase() + item.stat.name.slice(1)
+        }
+
         return {
-          name: item.stat.name,
+          name: statName,
           baseStat: item.base_stat
         }
       })
@@ -105,13 +121,23 @@ module.exports = {
         }
       })
 
+      // convert height of cm to ft and inches
+      // 1 foot = 0.3048 m
+      const heightInFeet = (Math.round(pokemon.height / 0.3048) / 10).toString()
+      const pokemonHeight = `${heightInFeet.slice(0, heightInFeet.indexOf('.'))}'${heightInFeet.slice(heightInFeet.indexOf('.') + 1)}"`
+
+      // convert weight of kg to lbs
+      // 1 kg = 2.2 lbs
+      // round to 2 decimals = Math.round(x * 100) / 100
+      const pokemonWeight = `${Math.round(pokemon.weight / 10 * 2.2 * 10) / 10} lbs`
+
       const pokemonData = {
         idPaddedZeroes: pokemonIDPaddedZeroes,
         imgUrl: pokemonImgUrl,
         types,
         stats,
-        height: pokemon.height,
-        weight: pokemon.weight,
+        height: pokemonHeight,
+        weight: pokemonWeight,
         speciesDescription,
         name: pokemonName,
         prevPokemon,

@@ -5,14 +5,13 @@
       </div>
 
       <div v-else-if='error' class='error'>
-        <h1>
-          Error...
-        </h1>
+        <h1>Error...</h1>
         {{error}}
       </div>
 
-      <div v-else>
-        <span class='cursor-pointer' v-for='pokemon in pokedex' @click='showDetails(pokemon.id)'>
+      <div v-else class='row justify-center'>
+        <!-- :key='index' to silence 'Elements in iteration expect to have v-bind:key directives' -->
+        <span class='cursor-pointer' v-for='(pokemon,index) in pokedex' :key='index' @click='showDetails(pokemon.id)'>
           <q-card inline class='pokemon-card' tabindex='0'>
             <q-card-main>
               <img :src='pokemon.imgUrl' class='center-img'>
@@ -40,20 +39,16 @@
 import {
   QCard,
   QCardTitle,
-  QCardSeparator,
-  QCardMain,
+  QCardMain
 } from 'quasar'
 
-import PokemonTypeChip from '@/PokemonTypeChip'
 import PokemonService from '../services/PokemonService'
 
 export default {
   components: {
     QCard,
     QCardTitle,
-    QCardSeparator,
-    QCardMain,
-    PokemonTypeChip
+    QCardMain
   },
   props: {
     pokemonGenerationIDs: {
