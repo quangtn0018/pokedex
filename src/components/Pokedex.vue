@@ -9,29 +9,41 @@
         {{error}}
       </div>
 
-      <div v-else class='row justify-center'>
-        <!-- :key='index' to silence 'Elements in iteration expect to have v-bind:key directives' -->
-        <span class='cursor-pointer' v-for='(pokemon,index) in pokedex' :key='index' @click='showDetails(pokemon.id)'>
-          <q-card inline class='pokemon-card' tabindex='0'>
-            <q-card-main>
-              <img :src='pokemon.imgUrl' class='center-img'>
-            </q-card-main>
-            
-            <q-card-title>
-              <div class='pokemon-id bold-text'>
-                #{{pokemon.idPaddedZeroes}}                
-              </div>
+      <div v-else>
+        <q-input
+          class='search-input'
+          v-model.trim='searchText'
+          @change='filterPokedex()'
+          float-label='Search pokemon name'
+          clearable
+        />
 
-              <div class='bold-text'>
-                {{pokemon.name}}
-              </div>
+        <div class='row justify-center'>
+          <!-- :key='index' to silence 'Elements in iteration expect to have v-bind:key directives' -->
+            <q-card
+              class='pokemon-card cursor-pointer'
+              v-for='(pokemon,index) in filteredPokedex'
+              :key='index' 
+              @click='showDetails(pokemon.id)'
+              tabindex='0'
+            >
+              <q-card-main>
+                <img :src='pokemon.imgUrl' class='center-img'>
+              </q-card-main>
               
-            </q-card-title>
-          </q-card>
-        </span>
-      </div>
+              <q-card-title>
+                <div class='pokemon-id bold-text'>
+                  #{{pokemon.idPaddedZeroes}}                
+                </div>
 
-      
+                <div class='bold-text'>
+                  {{pokemon.name}}
+                </div>
+                
+              </q-card-title>
+            </q-card>
+        </div>
+      </div> 
   </div>
 </template>
 
@@ -39,7 +51,8 @@
 import {
   QCard,
   QCardTitle,
-  QCardMain
+  QCardMain,
+  QInput
 } from 'quasar'
 
 import PokemonService from '../services/PokemonService'
@@ -48,7 +61,8 @@ export default {
   components: {
     QCard,
     QCardTitle,
-    QCardMain
+    QCardMain,
+    QInput
   },
   props: {
     pokemonGenerationIDs: {
@@ -62,7 +76,9 @@ export default {
     return {
       loading: false,
       error: null,
-      pokedex: []
+      pokedex: [],
+      searchText: '',
+      filteredPokedex: []
     }
   },
   // https://router.vuejs.org/en/advanced/data-fetching.html
@@ -76,6 +92,16 @@ export default {
     $route: 'setPokedex'
   },
   methods: {
+    filterPokedex() {
+      const searchText = this.searchText.toLowerCase()
+      if (searchText === '') {
+        this.filteredPokedex = this.pokedex.slice()
+        return
+      }
+      this.filteredPokedex = this.pokedex.filter((pokemon) => {
+        return pokemon.name.toLowerCase().includes(searchText)
+      })
+    },
     showDetails(id) {
       this.$router.push({ path: `/pokemon/${id}`})
     },
@@ -88,6 +114,7 @@ export default {
         const response = await PokemonService.getPokemonsNameList(this.pokemonGenerationIDs.FROM, this.pokemonGenerationIDs.TO)
         
         this.pokedex = response.data || []
+        this.filteredPokedex = this.pokedex.slice()
         this.loading = false
       } catch (err) {
         this.error = err
@@ -99,6 +126,10 @@ export default {
 </script>
 
 <style>
+.search-input {
+  margin-bottom: 40px;
+}
+
 .pokemon-id {
   color: #919191;
   font-size: 80%;
