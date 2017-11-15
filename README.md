@@ -26,6 +26,11 @@ $ npm install
 $ quasar dev
 ```
 
+## Special Notes
+Sometimes the server will timeout from taking to long to retreive request
+
+In this case, just wait or try to refresh the page
+
 ## Quasar
 Extra information about Quasar commands
 ``` bash

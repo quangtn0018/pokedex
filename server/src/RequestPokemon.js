@@ -105,7 +105,6 @@ module.exports = {
 
       // evolutions
       let evolutionsData = []
-      console.log('before getevoCall')
       _getEvolutionsInfo(evolutionChain.chain, (pokemon) => {
         // url = 'https://pokeapi.co/api/v2/pokemon-species/2/'
         // slicing to get the ID near the end of url

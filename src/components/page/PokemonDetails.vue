@@ -106,7 +106,7 @@
                         <div>
                           {{evolutionPokemon.name}}
                           <span class='pokemon-id'>
-                            #{{pokemonData.idPaddedZeroes}}
+                            #{{evolutionPokemon.idPaddedZeroes}}
                           </span>
                         </div>
                       </div>
@@ -127,7 +127,7 @@
                       <div>
                         {{evolutionPokemon.name}}
                         <span class='pokemon-id'>
-                          #{{pokemonData.idPaddedZeroes}}
+                          #{{evolutionPokemon.idPaddedZeroes}}
                         </span>
                       </div>
                     </div>
@@ -274,6 +274,7 @@ export default {
 
 .pokemon-id {
   color: #919191;
+  font-weight: bold;
 }
 
 .inner-content {
