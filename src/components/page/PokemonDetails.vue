@@ -98,7 +98,7 @@
                 {{noEvolutionMsg}}
               </div>
               
-              <div class='row justify-center gt-504px'>
+              <div class='row justify-center gt-medium-screen'>
                 <div class='items-center' v-for='(evolutionPokemon, index) in pokemonData.evolutionsData' :key='index'>
                     <div class='row items-center'>
                       <div class='text-center'>
@@ -118,7 +118,7 @@
                 </div>
               </div>
 
-              <div class='lt-504px'>
+              <div class='lt-medium-screen'>
                 <div class='' v-for='(evolutionPokemon, index) in pokemonData.evolutionsData' :key='index'>
                     <div class='text-center'>
                       <div>
@@ -211,17 +211,17 @@ export default {
 </script>
 
 <style scoped>
-@media all and (max-width: 504px) {
-  .gt-504px {
+@media all and (max-width: 890px) {
+  .gt-medium-screen {
     display: none;
   }
 
-  .lt-504px {
+  .lt-medium-screen {
     display: block !important;
   }
 }
 
-.lt-504px {
+.lt-medium-screen {
   display: none;
 }
 

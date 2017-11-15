@@ -4,6 +4,7 @@
 
 ## Build Setup
 Open up two terminal and cd into the repo
+
 In the first terminal, cd server/ and run the following commands
 ``` bash
 # install dependencies
