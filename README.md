@@ -17,7 +17,8 @@ $ npm start
 Then in the second terminal, stay or cd into root directory of repo / project and run the following commands
 ``` bash
 # install quasar http://quasar-framework.org/guide/
-$ npm install -g quasar-cli
+// make sure to follow prompt if needs to update to latest version of quasar
+$ npm i -g quasar-cli
 
 # install dependencies
 $ npm install
