@@ -10,7 +10,7 @@
         {{toolbarTitle}}
         <span slot='subtitle'>{{toolbarSubtitle}}</span>
       </q-toolbar-title>
-
+      <a class="github-tag" href='https://github.com/quangtn0018/pokedex'>GitHub</a>
     </q-toolbar>
 
     <!-- Left Side Panel -->
@@ -113,6 +113,14 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
+.github-tag {
+  color: white;
+  font-size: 26px;
+}
+
+.github-tag:hover {
+  color: black;
+}
 
 </style>
