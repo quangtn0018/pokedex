@@ -1,5 +1,5 @@
 {
-  "name": "server",
+  "name": "pokedex",
   "version": "1.0.0",
   "description": "",
   "main": "app.js",
@@ -7,7 +7,7 @@
     "start": "nodemon app.js --exec"
   },
   "keywords": [],
-  "author": "",
+  "author": "quangtn0018@gmail.com",
   "license": "ISC",
   "dependencies": {
     "body-parser": "^1.18.2",
